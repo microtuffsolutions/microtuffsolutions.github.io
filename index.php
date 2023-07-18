@@ -1,45 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
-<head>
-	<!-- Title -->
-	<title>Login Page </title>
+session_start();
 
-	<style>
-		label {
-			width: 100%;
-			max-width: 100px;
-			display: inline-block;
-			text-align: right;
-		}
+$key = json_decode(file_get_contents("check-c.json"),true);
 
-		div {
-			margin-top: 1em;
-		}
-	</style>
+if(isset($_COOKIE['logindata']) && $_COOKIE['logindata'] == $key['token'] && $key['expired'] == "no"){
+	header("location: panel.php");
 
-</head>
-<center>
-<body>
- <form action="auth/login.php" method="post">
-	<div>
-		<h2>Simple Login Script Demo</h2>
-	</div>	
-	<div>
-		 <label>Email</label>
-		<input type="text" name="email">
-	</div>
-	<div>
-		<label>Password</label>
-		<input type="password" name="password">
-	</div>
-	<div>
-		<input type='submit' value="Login" style="margin-left: 105px;">
-	</div>
-	<input type="hidden" name="submitted" value="1">
-</form>
+    
+}
 
+elseif(isset($_SESSION['IAm-logined'])){
+	header('location: panel.php');
+	exit;
+}
 
-</body>
-</center>
-</html>
+else{
+	header("location: login.php");
+	exit;
+}
+
+?>
